@@ -2,16 +2,6 @@
 # vi:filetype=sh:
 alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 
-# Function which adds an alias to the current shell and to
-# the ~/.bash_aliases file.
-add-alias ()
-{
-   local name=$1 value="$2"
-   echo "alias $name='$value'" >> ~/.bash_aliases
-   eval "alias $name='$value'"
-   alias $name
-}
-
 #######
 # git #
 #######
@@ -53,17 +43,29 @@ alias svnaddall='svn status | grep "^\?" | awk "{print \$2}" | xargs svn add' # 
 # use readline, completion and require rubygems by default for irb
 alias irb='irb --simple-prompt -r irb/completion -rubygems'
 
+export GEMDIR=`gem env gemdir`
 # use: cdgem <gem name>, cd's into your gems directory and opens gem that best
 # matches the gem name provided
 function cdgem {
-  cd /opt/local/lib/ruby/gems/1.8/gems/
+  cd $GEMDIR/gems
   cd `ls | grep $1 | sort | tail -1`
 }
+_cdgemcomplete() {
+  COMPREPLY=($(compgen -W '$(ls $GEMDIR/gems)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _cdgemcomplete cdgem
 # use: gemdoc <gem name>, opens gem docs from the gem docs directory that best
 # matches the gem name provided
-function gemdoc {
-  open -a firefox /opt/local/lib/ruby/gems/1.8/doc/`ls /opt/local/lib/ruby/gems/1.8/doc | grep $1 | sort | tail -1`/rdoc/index.html
+# (hat tip: http://stephencelis.com/archive/2008/6/bashfully-yours-gem-shortcuts)
+gemdoc() {
+  open -a firefox $GEMDIR/doc/`ls $GEMDIR/doc | grep $1 | sort | tail -1`/rdoc/index.html
 }
+_gemdocomplete() {
+  COMPREPLY=($(compgen -W '$(ls $GEMDIR/doc)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _gemdocomplete gemdoc
 
 #########
 # RAILS #
@@ -89,6 +91,18 @@ alias passenger-host='sudo gvim -p ~/apache2/vhosts.conf /etc/hosts > /dev/null'
 # You can also click System Preference->Sharing->Web Sharing, but this is quicker.
 alias graceful='sudo apachectl graceful'
 
+#########
+# ~/dev #
+#########
+cdd() {
+  cd ~/dev/$1
+}
+_cddcomplete() {
+  COMPREPLY=($(compgen -W '$(ls ~/dev/)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _cddcomplete cdd
+
 
 ########
 # misc #
@@ -100,7 +114,6 @@ alias ls='ls --color=auto'
 alias ll="ls -l --color=auto"
 alias la='ls -A --color=auto'
 alias lla='ls -Al --color=auto'
-
 alias svnst="svn st | grep -v '^\?'"
-
 alias which='which -a'
+alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"

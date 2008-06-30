@@ -31,21 +31,36 @@ source ~/config/utilities/completion_git.sh
 [ -z $DISPLAY ] && export DISPLAY=:0
 [ -z $EDITOR ] && export EDITOR=vim
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+# If this is an xterm set the title to user@host:dir
 case "$TERM" in
+<<<<<<< HEAD:bashrc
 xterm-color)
     PS1='\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)")\$ '
     ;;
 *)
-    PS1='\h:\w \u\$ '
-    ;;
+  ;;
 esac
 
-# If this is an xterm set the title to user@host:dir
+# completion
+complete -C ~/.utils/completion_rake.rb -o default rake
+source ~/.utils/completion_git.sh
+if [ -f /opt/local/etc/bash_completion ]; then
+  . /opt/local/etc/bash_completion
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
-    ;;
-*)
-    ;;
+xterm-color)
+  yellow="\[\e[0;33m\]"
+  green="\[\e[0;32m\]"
+  red="\[\e[0;31m\]"
+  blue="\[\e[0;34m\]"
+  fgcolor="\[\e[0m\]"
+  #export PS1="${yellow}\h${fgcolor}:${green}\W${red}\$(__git_ps1)${fgcolor}\$ "
+  export PS1="${yellow}\h${fgcolor}:${blue}\w${fgcolor} ${green}\u${fgcolor}\$(__git_ps1 \" (%s)\")$ "
+  unset yellow green red blue fgcolor
+  ;;
+  *)
+  PS1='\h:\w \u\$ '
+  ;;
 esac
