@@ -19,10 +19,10 @@ set showcmd
 colorscheme desert
 set incsearch
 set hlsearch
-set cursorline
+" set cursorline
 hi CursorLine term=none cterm=none ctermbg=DarkBlue
-autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=DarkBlue
-autocmd InsertEnter * hi CursorLine term=none cterm=none ctermbg=DarkBlue
+" autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=DarkBlue
+" autocmd InsertEnter * hi CursorLine term=none cterm=none ctermbg=DarkBlue
 set autoindent
 set tabstop=4
 set softtabstop=2
