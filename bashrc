@@ -25,15 +25,12 @@ shopt -s checkwinsize
 # if [ -f /opt/local/etc/bash_completion ]; then
 #   . /opt/local/etc/bash_completion
 # fi
-complete -C ~/config/utilities/completion_rake.rb -o default rake
-source ~/config/utilities/completion_git.sh
 
 [ -z $DISPLAY ] && export DISPLAY=:0
 [ -z $EDITOR ] && export EDITOR=vim
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-<<<<<<< HEAD:bashrc
 xterm-color)
     PS1='\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)")\$ '
     ;;
@@ -43,7 +40,6 @@ esac
 
 # completion
 complete -C ~/.utils/completion_rake.rb -o default rake
-source ~/.utils/completion_git.sh
 if [ -f /opt/local/etc/bash_completion ]; then
   . /opt/local/etc/bash_completion
 fi
