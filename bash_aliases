@@ -6,13 +6,17 @@ alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 # git #
 #######
 alias g='git'
+alias ga="git add"
 alias gb='git branch --verbose'
 alias gc='git commit --verbose'
 alias gca='git commit --verbose --all'
+alias gco="git checkout"
 alias gd='git diff --ignore-space-change'
 alias gk='gitk &'
 alias gl='git pull'
+alias gm="git merge"
 alias gp='git push'
+alias gs="git stash"
 
 function gco {
   if [ -z "$1" ]; then
@@ -91,18 +95,6 @@ alias passenger-host='sudo gvim -p ~/apache2/vhosts.conf /etc/hosts > /dev/null'
 # You can also click System Preference->Sharing->Web Sharing, but this is quicker.
 alias graceful='sudo apachectl graceful'
 
-#########
-# ~/dev #
-#########
-cdd() {
-  cd ~/dev/$1
-}
-_cddcomplete() {
-  COMPREPLY=($(compgen -W '$(ls ~/dev/)' -- ${COMP_WORDS[COMP_CWORD]}))
-  return 0
-}
-complete -o default -o nospace -F _cddcomplete cdd
-
 
 ########
 # misc #
@@ -117,3 +109,5 @@ alias lla='ls -Al --color=auto'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
+
+export CDPATH=.:~/dev:~/Desktop/projects

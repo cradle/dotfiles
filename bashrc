@@ -1,3 +1,5 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
 # set PATH so it includes ports
 # set MANPATH so it includes ports
 export MANPATH=/opt/local/share/man:"${MANPATH}"
@@ -17,6 +19,8 @@ fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
+
+export GREP_OPTIONS="--color=auto"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.

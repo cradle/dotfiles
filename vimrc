@@ -32,7 +32,7 @@ set laststatus=2
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
 set enc=utf-8
 set backspace=eol,start,indent " make backspace work
-set hid " no need to save to change buffers
+"set hidden " no need to save to change buffers
 runtime! macros/matchit.vim
 if &t_Co > 1
   syntax enable
@@ -45,9 +45,9 @@ endif
 set shellslash
 
 " Mappings
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
 
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap ] <c-r>=ClosePair(']')<CR>
@@ -110,7 +110,7 @@ command -bar -nargs=1 OpenURL :!open <args>
 let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
 
 " Comments
-let b:comment_leader = '# '
+au FileType ?                           let b:comment_leader = '# '  " default
 au FileType haskell,vhdl,ada            let b:comment_leader = '-- '
 au FileType vim                         let b:comment_leader = '" '
 au FileType c,cpp,java                  let b:comment_leader = '// '
