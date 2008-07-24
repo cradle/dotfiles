@@ -33,15 +33,6 @@ shopt -s checkwinsize
 [ -z $DISPLAY ] && export DISPLAY=:0
 [ -z $EDITOR ] && export EDITOR=vim
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm-color)
-    PS1='\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)")\$ '
-    ;;
-*)
-  ;;
-esac
-
 # completion
 complete -C ~/.utils/completion_rake.rb -o default rake
 if [ -f /opt/local/etc/bash_completion ]; then
@@ -57,10 +48,23 @@ xterm-color)
   blue="\[\e[0;34m\]"
   fgcolor="\[\e[0m\]"
   #export PS1="${yellow}\h${fgcolor}:${green}\W${red}\$(__git_ps1)${fgcolor}\$ "
-  export PS1="${yellow}\h${fgcolor}:${blue}\w${fgcolor} ${green}\u${fgcolor}\$(__git_ps1 \" (%s)\")$ "
+  export PS1="${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")$ "
   unset yellow green red blue fgcolor
   ;;
   *)
   PS1='\h:\w \u\$ '
   ;;
 esac
+
+SSH_ENV=$HOME/.ssh/environment
+
+function start_agent {
+     echo "Initializing new SSH agent..."
+     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
+     echo succeeded
+     chmod 600 ${SSH_ENV}
+     . ${SSH_ENV} > /dev/null
+     /usr/bin/ssh-add;
+}
+
+. ~/config/adam-dotfiles/git_completion
