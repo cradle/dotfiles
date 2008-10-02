@@ -1,6 +1,6 @@
 [user]
-  name = Matthew Fallshaw
-  email = matthew.fallshaw@gmail.com
+  name = Glenn Murray
+  email = cradle@gmail.com
 [apply]
   whitespace = nowarn
 [alias]
@@ -18,8 +18,8 @@
   interactive = auto
   status = auto
 [core]
-  excludesfile = /Users/matt/.gitignore
-  editor = vim -c 'set ft=diff'
+  excludesfile = /Users/glenn/.gitignore
+  # editor = vim -c 'set ft=diff'
 [mirror]
   summary = true
 [merge]
