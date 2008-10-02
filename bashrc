@@ -17,8 +17,14 @@ fi
 # If not running interactively, don't do anything else
 [ -z "$PS1" ] && return
 
-# don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoredups
+# don't put duplicate lines or lines starting with a space (good for sensitive info) in the history.
+export HISTCONTROL=ignoredups:ignorespace
+
+# share history between terms
+shopt -s histappend
+PROMPT_COMMAND='history -a'
+
+export HISTSIZE=10000
 
 export GREP_OPTIONS="--color=auto"
 
@@ -34,7 +40,15 @@ shopt -s checkwinsize
 [ -z $EDITOR ] && export EDITOR=vim
 
 # completion
-complete -C ~/.utils/completion_rake.rb -o default rake
+complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
+function clear-completion-rake {
+  rm ~/.raketabs-*
+}
+complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
+function clear-completion-cap {
+  rm ~/.captabs-*
+}
+
 if [ -f /opt/local/etc/bash_completion ]; then
   . /opt/local/etc/bash_completion
 fi
@@ -67,4 +81,4 @@ function start_agent {
      /usr/bin/ssh-add;
 }
 
-. ~/config/adam-dotfiles/git_completion
+. ~/dotfiles/utils/completion_git.sh
