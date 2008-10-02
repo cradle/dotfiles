@@ -9,6 +9,7 @@ alias g='git'
 alias ga="git add"
 alias gb='git branch --verbose'
 alias gc='git commit --verbose'
+alias gci='git commit --verbose'
 alias gca='git commit --verbose --all'
 alias gco="git checkout"
 alias gd='git diff --ignore-space-change'
@@ -102,10 +103,10 @@ alias graceful='sudo apachectl graceful'
 alias h='history'
 alias j="jobs -l"
 alias l="ls -lah"
-alias ls='ls --color=auto'
-alias ll="ls -l --color=auto"
-alias la='ls -A --color=auto'
-alias lla='ls -Al --color=auto'
+alias ls='ls -GF'
+alias ll="ls -l -GF"
+alias la='ls -A -GF'
+alias lla='ls -Al -GF'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
