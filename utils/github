@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'uri'
+
+branch = `git branch | grep "^*" | cut -c 3-`.strip
+remote = `git config branch.#{branch}.remote`.strip
+url = `git remote show #{remote} -n | grep "^  URL: " | cut -c 8-`.strip
+url.sub!(/^git@(.*):/,'git://\1/')
+uri = URI.parse(url)  
+
+exit if uri.host != "github.com"
+
+username, project_name = uri.path.split("/",3)[1..-1]
+
+project_name.sub!(/\.git$/,'')
+
+`open "http://github.com/#{username}/#{project_name}/tree/#{branch}"`
