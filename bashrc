@@ -69,23 +69,20 @@ function clear-completion-cap {
   rm ~/.captabs-*
 }
 
-if [ -f /opt/local/etc/bash_completion ]; then
-  . /opt/local/etc/bash_completion
-if [ "$system_name" == 'Darwin' ]; then
-  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
-  function clear-completion-rake {
-    rm ~/.raketabs-*
-  }
-  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
-  function clear-completion-cap {
-    rm ~/.captabs-*
-  }
-  source ~/.utils/completion_git.sh
-  if [ -f /opt/local/etc/bash_completion ]; then
-    . /opt/local/etc/bash_completion
-  fi
->>>>>>> matt/master:bashrc
-fi
+#if [ "$system_name" == 'Darwin' ]; then
+#  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
+#  function clear-completion-rake {
+#    rm ~/.raketabs-*
+#  }
+#  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
+#  function clear-completion-cap {
+#    rm ~/.captabs-*
+#  }
+#  source ~/.utils/completion_git.sh
+#  if [ -f /opt/local/etc/bash_completion ]; then
+#    . /opt/local/etc/bash_completion
+#  fi
+#fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -116,8 +113,3 @@ function start_agent {
 }
 
 . ~/dotfiles/utils/completion_git.sh
-if [ "$system_name" == 'Darwin' ]; then
-  # mpd config
-  export MPD_HOST=mpd
-  export MPD_PORT=6600
-fi
