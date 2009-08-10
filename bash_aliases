@@ -14,10 +14,13 @@ alias gca='git commit --verbose --all'
 alias gco="git checkout"
 alias gd='git diff --ignore-space-change'
 alias gk='gitk &'
+alias gx='gitx .'
 alias gl='git pull'
 alias gm="git merge"
 alias gp='git push'
 alias gs="git stash"
+alias gsu="git submodule update --init"
+alias gst="git st"
 
 function gco {
   if [ -z "$1" ]; then
@@ -46,7 +49,8 @@ alias svnaddall='svn status | grep "^\?" | awk "{print \$2}" | xargs svn add' # 
 # RUBY #
 ########
 # use readline, completion and require rubygems by default for irb
-alias irb='irb --simple-prompt -r irb/completion -rubygems'
+alias irb='irb --simple-prompt -r irb/completion'
+alias rd='rdebug --no-stop'
 
 export GEMDIR=`gem env gemdir`
 # use: cdgem <gem name>, cd's into your gems directory and opens gem that best

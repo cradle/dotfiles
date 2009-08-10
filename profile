@@ -13,3 +13,9 @@ export PATH=$PATH:/usr/local/mysql/bin
 
 # Path for my binaries
 export PATH=~/bin:$PATH
+
+# Setting PATH for MacPython 2.5
+# The orginal version is saved in .profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
+export PATH
+source ~/ruby_switcher.sh

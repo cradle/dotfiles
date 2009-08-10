@@ -2,12 +2,17 @@
 
 # set PATH so it includes ports
 # set MANPATH so it includes ports
+export PATH=$PATH:/opt/local/lib/postgresql82/bin
 export MANPATH=/opt/local/share/man:"${MANPATH}"
 
 # set PATH so it includes user's private bin if it exists
+export PATH=$PATH:/opt/local/bin
 
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
+
+# Java Home (for ec2)
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
@@ -40,11 +45,11 @@ shopt -s checkwinsize
 [ -z $EDITOR ] && export EDITOR=vim
 
 # completion
-complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
+complete -C "ruby -r~/dotfiles/utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
 function clear-completion-rake {
   rm ~/.raketabs-*
 }
-complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
+complete -C "ruby -r~/dotfiles/utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
 function clear-completion-cap {
   rm ~/.captabs-*
 }
@@ -59,7 +64,7 @@ xterm-color)
   yellow="\[\e[0;33m\]"
   green="\[\e[0;32m\]"
   red="\[\e[0;31m\]"
-  blue="\[\e[0;34m\]"
+  blue="\[\e[1;34m\]"
   fgcolor="\[\e[0m\]"
   #export PS1="${yellow}\h${fgcolor}:${green}\W${red}\$(__git_ps1)${fgcolor}\$ "
   export PS1="${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")$ "
