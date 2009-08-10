@@ -1,5 +1,4 @@
 # Some useful aliases
-# vi:filetype=sh:
 alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 
 #######
@@ -8,6 +7,7 @@ alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 alias g='git'
 alias ga="git add"
 alias gb='git branch --verbose'
+alias gba='git branch --verbose -a'
 alias gc='git commit --verbose'
 alias gci='git commit --verbose'
 alias gca='git commit --verbose --all'
@@ -15,12 +15,26 @@ alias gco="git checkout"
 alias gd='git diff --ignore-space-change'
 alias gk='gitk &'
 alias gx='gitx .'
+if [ "$system_name" == 'Darwin' ]; then
+  alias gd='git diff --ignore-space-change | gitx'
+else
+  alias gd='git diff --ignore-space-change'
+fi
+alias gk='gitk --all &'
 alias gl='git pull'
 alias gm="git merge"
+alias gnp='git --no-pager'
 alias gp='git push'
 alias gs="git stash"
 alias gsu="git submodule update --init"
 alias gst="git st"
+alias gst='git status'
+
+alias gitrm="git stat | grep deleted | awk '{print $3}' | xargs git rm"
+
+function gsearch {
+  for branch in `git branch | sed 's/\*//'`; do echo $branch:; git ls-tree -r --name-only $branch | grep "$1"; done
+}
 
 function gco {
   if [ -z "$1" ]; then
@@ -64,6 +78,7 @@ _cdgemcomplete() {
   return 0
 }
 complete -o default -o nospace -F _cdgemcomplete cdgem
+
 # use: gemdoc <gem name>, opens gem docs from the gem docs directory that best
 # matches the gem name provided
 # (hat tip: http://stephencelis.com/archive/2008/6/bashfully-yours-gem-shortcuts)
@@ -76,6 +91,14 @@ _gemdocomplete() {
 }
 complete -o default -o nospace -F _gemdocomplete gemdoc
 
+# use: vimgem <gem name>, cd's into your gems directory and opens gem that best
+# matches the gem name provided in gvim
+function vimgem {
+  gvim -c NERDTree $GEMDIR/gems/`ls $GEMDIR/gems | grep $1 | sort | tail -1`
+}
+complete -o default -o nospace -F _cdgemcomplete vimgem
+
+
 #########
 # RAILS #
 #########
@@ -83,7 +106,7 @@ alias ss='script/server' # start up the beast
 alias sr='kill -USR2 `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sst='kill `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sc='script/console'
-alias a='autotest -rails' # makes autotesting even quicker
+alias a='autospec' # makes autotesting even quicker
 
 #############
 # PASSENGER #
@@ -107,12 +130,18 @@ alias graceful='sudo apachectl graceful'
 alias h='history'
 alias j="jobs -l"
 alias l="ls -lah"
-alias ls='ls -GF'
-alias ll="ls -l -GF"
-alias la='ls -A -GF'
-alias lla='ls -Al -GF'
+alias ls='ls -h --color=auto'
+alias ll="ls -lh --color=auto"
+alias la='ls -ah --color=auto'
+alias lla='ls -alh --color=auto'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
+alias pwsafe='pwsafe -E'
+alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
+alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
+alias ...='.. ..'
+alias ....='.. .. ..'
+alias cdp='cd ~/Desktop/projects'
 
-export CDPATH=.:~/dev:~/Desktop/projects
+# vi:filetype=sh

@@ -17,12 +17,14 @@
   diff = auto
   interactive = auto
   status = auto
+  ui = auto
 [core]
   excludesfile = /Users/glenn/.gitignore
   # editor = vim -c 'set ft=diff'
 [mirror]
   summary = true
 [merge]
+  summary = true
   tool = opendiff
 [branch "master"]
   remote = origin
@@ -36,3 +38,4 @@
 	token = 2e49895bee4d0a5b7bf68a9a98a3fde5
 [push]
 	default = tracking
+# vi:filetype=conf
